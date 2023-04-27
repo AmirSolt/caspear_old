@@ -1,45 +1,106 @@
 <script>
     import Activity from "../lib/scenes/Activity.svelte";
+    import Landing from "../lib/scenes/Landing.svelte";
 
+    import { swipe } from 'svelte-gestures';
+    let direction;
+    
 
-    const activities = [
-        {
-        name: "Activity #1",
-        price: 100,
-        description: "This is an example activity",
-        link:"https://www.expedia.com/things-to-do/nassau-glass-bottom-boat-banana-boat-and-snorkelling-tour.a4513511.activity-details?endDate=2023-05-11&location=Bahamas&rid=13&selectedId=&sort=RECOMMENDED&startDate=2023-04-27&swp=on",
-        images: ["https://mediaim.expedia.com/localexpert/4513511/3dce46ae-df52-4acf-94e6-4821680d5078.jpg?impolicy=resizecrop&rw=1005&rh=565"]
-        },
-        {
-        name: "Activity #2",
-        price: 200,
-        description: "This is an example activity",
-        link:"https://www.expedia.com/things-to-do/blue-lagoon-beach-day-with-lunch.a301602.activity-details?&rid=13&location=Bahamas&startDate=2023-04-27&endDate=2023-04-27&sort=RECOMMENDED&selectedId=&swp=on",
-        images: ["https://mediaim.expedia.com/localexpert/301602/b0434e79-dcc8-4b81-bf63-1c93a3d2d422.jpg?impolicy=resizecrop&rw=1005&rh=565"]
-        },
-
-    ]
+    export let data;
+    let activities = data.activities;
 
 
     let sceneIndex = 0;
     $: chosenActivity = activities[sceneIndex];
 
-
     function previousActivity() {
-        sceneIndex-=1;
+        if (sceneIndex > 0)
+            sceneIndex -= 1;
     }
     function nextActivity() {
-        sceneIndex+=1;
+        if (sceneIndex < activities.length - 1)
+            sceneIndex += 1;
     }
 
+    function handleSwipe(event) {
+        direction = event.detail.direction;
+        if (direction == "left") {
+            nextActivity();
+        } else if (direction == "right") {
+            previousActivity();
+        }
+    }
 </script>
 
+
+
+<div 
+    use:swipe={{ timeframe: 300, minSwipeDistance: 100, touchAction: 'pan-y' }} on:swipe={handleSwipe}
+>
+
+
+{#if sceneIndex == 0}
+<Landing />
+{/if}
+{#if sceneIndex > 0}
 <Activity activity={chosenActivity} />
+{/if}
+
+</div>
 
 
-<button on:click={previousActivity}>
-    Previous
-</button>
-<button on:click={nextActivity}>
-    Next
-</button>
+
+<div id="button-container">
+    {#if sceneIndex > 0}
+        <button class="arrow" on:click={previousActivity}> 
+            <svg version="1.1" id="icons_1_" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 128 128" style="enable-background:new 0 0 128 128" xml:space="preserve"><style>.st0{display:none}.st1{display:inline}.st2{fill:#0a0a0a}</style><g id="row2_1_"><g id="_x31__4_"><path class="st2" d="M64 .3C28.7.3 0 28.8 0 64s28.7 63.7 64 63.7 64-28.5 64-63.7S99.3.3 64 .3zm0 121C32.2 121.3 6.4 95.7 6.4 64 6.4 32.3 32.2 6.7 64 6.7s57.6 25.7 57.6 57.3c0 31.7-25.8 57.3-57.6 57.3zm1.3-82.8L41.6 64l23.6 25.5h13.5L54.4 64l24.4-25.5H65.3z" id="left_3_"/></g></g></svg>
+        </button>
+    {/if}
+    {#if sceneIndex <= 0}
+        <button class="arrow" style="visibility: hidden;"> 
+            <svg version="1.1" id="icons_1_" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 128 128" style="enable-background:new 0 0 128 128" xml:space="preserve"><style>.st0{display:none}.st1{display:inline}.st2{fill:#0a0a0a}</style><g id="row2_1_"><g id="_x31__4_"><path class="st2" d="M64 .3C28.7.3 0 28.8 0 64s28.7 63.7 64 63.7 64-28.5 64-63.7S99.3.3 64 .3zm0 121C32.2 121.3 6.4 95.7 6.4 64 6.4 32.3 32.2 6.7 64 6.7s57.6 25.7 57.6 57.3c0 31.7-25.8 57.3-57.6 57.3zm1.3-82.8L41.6 64l23.6 25.5h13.5L54.4 64l24.4-25.5H65.3z" id="left_3_"/></g></g></svg>    
+        </button>
+    {/if}
+
+
+    {#if sceneIndex < activities.length -1}
+        <button class="arrow" on:click={nextActivity}> 
+            <svg version="1.1" id="icons_1_" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 128 128" style="enable-background:new 0 0 128 128" xml:space="preserve"><style>.st0{display:none}.st1{display:inline}.st2{fill:#0a0a0a}</style><g id="row1_1_"><g id="_x31__3_"><path class="st2" d="M64 0C28.7 0 0 28.7 0 64s28.7 64 64 64 64-28.7 64-64S99.3 0 64 0zm0 121.6C32.2 121.6 6.4 95.8 6.4 64S32.2 6.4 64 6.4s57.6 25.8 57.6 57.6-25.8 57.6-57.6 57.6zM49.2 38.4 73.6 64 49.2 89.6h13.5L86.4 64 62.7 38.4H49.2z" id="_x32__2_"/></g></g></svg>
+        </button>
+    {/if}
+    {#if sceneIndex >= activities.length -1}
+        <button class="arrow" style="visibility: hidden;">
+            <svg version="1.1" id="icons_1_" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 128 128" style="enable-background:new 0 0 128 128" xml:space="preserve"><style>.st0{display:none}.st1{display:inline}.st2{fill:#0a0a0a}</style><g id="row1_1_"><g id="_x31__3_"><path class="st2" d="M64 0C28.7 0 0 28.7 0 64s28.7 64 64 64 64-28.7 64-64S99.3 0 64 0zm0 121.6C32.2 121.6 6.4 95.8 6.4 64S32.2 6.4 64 6.4s57.6 25.8 57.6 57.6-25.8 57.6-57.6 57.6zM49.2 38.4 73.6 64 49.2 89.6h13.5L86.4 64 62.7 38.4H49.2z" id="_x32__2_"/></g></g></svg>
+        </button>
+    {/if}
+</div>
+
+
+
+
+
+
+
+<style>
+    #button-container {
+        position: fixed;
+        top: 50%;
+        left: 2%;
+        width: 96%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .arrow {
+        border: none;
+        background: none;
+        cursor: pointer;
+        width: 2.5em;
+        height: 2.5em;
+        text-align: center;
+    }
+
+
+
+ 
+</style>

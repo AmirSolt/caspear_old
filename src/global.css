@@ -1,0 +1,21 @@
+
+:root{
+    --primary: rgba(246, 246, 246);
+    --primary-transparent: rgba(246, 246, 246, 0.8);
+
+    --secondary: rgba(0,152,219);
+    --text: rgba(0, 0, 0);
+    --text-secondary: rgb(255, 255, 255);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+body{
+    background-color: var(--primary);
+}
