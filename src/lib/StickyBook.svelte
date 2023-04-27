@@ -74,4 +74,11 @@
         left: 0;
         transition: all 0.3s;
     }
+
+
+    @media only screen and (min-width: 600px) {
+        .book-now-container{
+            padding: 0 15%;
+        }
+    }
 </style>

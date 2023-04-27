@@ -66,7 +66,7 @@
             padding: 0 15%;
         }
     }
-    @media only screen and (max-width: 600px) {
+    /* @media only screen and (max-width: 600px) {
         
-    }
+    } */
 </style>
