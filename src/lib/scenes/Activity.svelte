@@ -15,7 +15,7 @@
         <p>${activity.price} Per Person</p>
         <p>{activity.description}</p>
         <div class="book-now-container">
-            <button class="book-now" href={activity.link} target="_blank">Book Now</button>
+            <a class="book-now" href={activity.link} target="_blank">Book Now</a>
         </div>
     </div>
 
@@ -53,6 +53,7 @@
         width: 100%;
     }
     .book-now{
+        display: block;
         background-color: var(--secondary);
         color: var(--text-secondary);
         font-size: 1em;
@@ -60,6 +61,7 @@
         padding: 0.5em 1em;
         border-radius: 0.5em;
         border: 1px solid #000;
+        text-decoration: none;
     }
 
     /* page size condition */
