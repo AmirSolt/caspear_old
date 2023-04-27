@@ -44,5 +44,9 @@
         width: auto;
         height: 25em;
         color: var(--secondary);
+        padding: 0.3em;
+        border-radius: var(--radius);
+        border: 1px solid #000;
     }
+    
 </style>
