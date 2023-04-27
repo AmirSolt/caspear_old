@@ -1,7 +1,7 @@
 
 :root{
     --primary: rgba(246, 246, 246);
-    --primary-transparent: rgba(246, 246, 246, 0.8);
+    --primary-transparent: rgba(246, 246, 246, 0.9);
 
     --secondary: rgba(0,152,219);
     --text: rgba(0, 0, 0);
